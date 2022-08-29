@@ -1,6 +1,7 @@
 package com.example.notifapp
 
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -18,6 +19,12 @@ class dashboard : AppCompatActivity() {
 
         binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val userData = intent.getStringExtra("json_user")
+
+        if (userData != null) {
+            Log.d("FILIP VAZNO", userData)
+        }
 
         val navView: BottomNavigationView = binding.navView
 
