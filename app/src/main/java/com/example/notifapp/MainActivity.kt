@@ -5,7 +5,6 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import androidx.annotation.RequiresApi
@@ -24,7 +23,6 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -42,13 +40,18 @@ class MainActivity : AppCompatActivity() {
         testButton.setOnClickListener {
 //            val intent = Intent( this, dashboard::class.java)
 //            startActivity(intent)
-            addUser(usernameText.text.toString(),usernameText.text.toString())
+            //addUser(usernameText.text.toString(),usernameText.text.toString())
         }
 
 
         val logIn: Button = findViewById(R.id.logIn) as Button
         logIn.setOnClickListener {
-            getUserData(usernameText.text.toString())
+            getUserDataLogin(usernameText.text.toString())
+        }
+
+        val createUser: Button = findViewById(R.id.createUser) as Button
+        createUser.setOnClickListener {
+            addUser(usernameText.text.toString(),passwordText.text.toString())
         }
 
         usernameText.setOnClickListener {
@@ -170,7 +173,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun getUserData(user:String) {
+    private fun getUserDataLogin(user:String) {
         // Create Retrofit
         val retrofit = Retrofit.Builder()
             .baseUrl("https://revu-notif.duckdns.org")
