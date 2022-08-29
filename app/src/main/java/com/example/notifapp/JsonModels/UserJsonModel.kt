@@ -15,3 +15,4 @@ data class UserJsonModel(
     @SerializedName("user_name")
     var user_name: String?
 )
+

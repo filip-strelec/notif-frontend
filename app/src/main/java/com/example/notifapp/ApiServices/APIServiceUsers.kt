@@ -21,7 +21,7 @@ interface APIServiceUser {
 
 interface APIServicesCreateUser {
     @POST("/add-user")
-    suspend fun addUser(@Body requestBody: RequestBody): Response<ResponseBody>
+    suspend fun addUser(@Body requestBody: RequestBody): Response<UserJsonModel>
 
 
 }

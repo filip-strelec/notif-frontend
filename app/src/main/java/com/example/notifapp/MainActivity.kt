@@ -126,8 +126,7 @@ class MainActivity : AppCompatActivity() {
     private fun addUser(username:String, password:String) {
         // Create Retrofit
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://revu-notif.duckdns.org")
-            .build()
+            .baseUrl("https://revu-notif.duckdns.org").addConverterFactory(GsonConverterFactory.create()).build()
 
         // Create Service
         val service = retrofit.create(APIServicesCreateUser::class.java)
@@ -150,17 +149,29 @@ class MainActivity : AppCompatActivity() {
 
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
+                    var user_hash=""
+                    val items = response.body()
+                    if (items != null) {
 
-                    // Convert raw JSON to pretty JSON using GSON library
-                    val gson = GsonBuilder().setPrettyPrinting().create()
-                    val prettyJson = gson.toJson(
-                        JsonParser.parseString(
-                            response.body()
-                                ?.string() // About this thread blocking annotation : https://github.com/square/retrofit/issues/3255
-                        )
-                    )
+                        val id = items.id ?: "N/A"
+                        Log.d("ID: ", id)
 
-                    Log.d("Pretty Printed JSON :", prettyJson)
+                        val password = items.password?: "N/A"
+                        Log.d("Password: ", password)
+
+                        val unique_hash = items.unique_hash ?: "N/A"
+                        Log.d("unique_hash: ", unique_hash)
+                        user_hash=unique_hash
+
+                        val user_name = items.user_name ?: "N/A"
+                        Log.d("user_name: ", user_name)
+
+                        val intent = Intent(this@MainActivity, dashboard::class.java)
+
+                        intent.putExtra("json_user", user_hash)
+                        startActivity(intent)
+
+                    }
 
                 } else {
 
